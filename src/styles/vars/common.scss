@@ -1,0 +1,7 @@
+// breakpoints
+$screen-desktop:            1024px;
+$screen-tablet:             768px; 
+$screen-smartphone:         640px;
+$screen-mobile:             480px;
+$screen-basic:              320px;
+$slicer-breakpoints:        $screen-basic $screen-mobile $screen-smartphone $screen-tablet $screen-desktop;
