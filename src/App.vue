@@ -1,28 +1,61 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <b-container fluid id="app" class="mt-5">
+    <b-row class="justify-content-center mb-4">
+      <b-col cols="10" sm="3">
+        <date-picker 
+          v-model="date" 
+          :config="options">
+        </date-picker>
+      </b-col>
+    </b-row>
+
+    <b-row>
+      <b-col sm="3" cols="12" class="d-inline-block">
+        <header>Aircrafts</header>
+      </b-col>
+      <b-col sm="5" cols="12" class="d-inline-block">
+        <header>Rotation</header>
+      </b-col>
+      <b-col sm="4" cols="12" class="d-inline-block">
+        <header>Flights</header>
+      </b-col>
+    </b-row>
+  </b-container>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue';
+import datePicker from 'vue-bootstrap-datetimepicker';
+
+// Create current date
+const currentDate = new Date();
+currentDate.setDate(currentDate.getDate() + 1);
 
 export default {
-  name: 'app',
+  name: 'aircraft-scheduling',
+
   components: {
-    HelloWorld,
+    datePicker,
+  },
+
+  data() {
+    return {
+      date: currentDate,
+      options: {
+        format: 'Do MMMM YYYY',
+        minDate: currentDate,
+        maxDate: currentDate,
+      },     
+    };
   },
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  max-width: $screen-desktop;
 }
 </style>

@@ -1,6 +1,8 @@
 const merge = require('webpack-merge');
 // tests
 const karmaConfig = require('./config/karma.conf');
+// build and serve
+const configureWebpack = require('./config/webpack.conf');
 // app stylization
 const sass = require('./config/sass.conf');
 // environment vars
@@ -32,6 +34,8 @@ module.exports = {
       },
     },
   },
+
+  configureWebpack,
 
   pluginOptions: {
     karma: { karmaConfig },

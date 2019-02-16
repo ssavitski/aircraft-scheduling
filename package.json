@@ -11,7 +11,9 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "bootstrap-vue": "^2.0.0-rc.12",
     "vue": "^2.5.22",
+    "vue-bootstrap-datetimepicker": "^5.0.1",
     "vuex": "^3.0.1"
   },
   "devDependencies": {
@@ -39,6 +41,8 @@
     "karma-webpack": "^3.0.5",
     "lint-staged": "^8.1.0",
     "mocha": "^5.0.5",
+    "node-sass": "^4.11.0",
+    "sass-loader": "^7.1.0",
     "vue-cli-plugin-unit-karma": "^0.5.0",
     "vue-template-compiler": "^2.5.21"
   },
