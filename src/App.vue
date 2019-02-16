@@ -16,6 +16,7 @@
       </b-col>
       <b-col sm="5" cols="12" class="d-inline-block">
         <header class="mb-3">Rotation</header>
+        <flights-list></flights-list>
       </b-col>
       <b-col sm="4" cols="12" class="d-inline-block">
         <header class="mb-3">Flights</header>
@@ -28,6 +29,7 @@
 import datePicker from 'vue-bootstrap-datetimepicker';
 
 import aircraftsList from '@/components/AircraftsList';
+import FlightsList from '@/components/FlightsList';
 
 // Create current date
 const currentDate = new Date();
@@ -39,6 +41,7 @@ export default {
   components: {
     datePicker,
     aircraftsList,
+    FlightsList,
   },
 
   data() {
