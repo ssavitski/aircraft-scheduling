@@ -11,13 +11,14 @@
 
     <b-row>
       <b-col sm="3" cols="12" class="d-inline-block">
-        <header>Aircrafts</header>
+        <header class="mb-3">Aircrafts</header>
+        <aircrafts-list></aircrafts-list>
       </b-col>
       <b-col sm="5" cols="12" class="d-inline-block">
-        <header>Rotation</header>
+        <header class="mb-3">Rotation</header>
       </b-col>
       <b-col sm="4" cols="12" class="d-inline-block">
-        <header>Flights</header>
+        <header class="mb-3">Flights</header>
       </b-col>
     </b-row>
   </b-container>
@@ -25,6 +26,8 @@
 
 <script>
 import datePicker from 'vue-bootstrap-datetimepicker';
+
+import aircraftsList from '@/components/AircraftsList';
 
 // Create current date
 const currentDate = new Date();
@@ -35,6 +38,7 @@ export default {
 
   components: {
     datePicker,
+    aircraftsList,
   },
 
   data() {
