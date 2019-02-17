@@ -15,7 +15,9 @@
             </b-card-text>
           </b-col>
           <b-col cols="6" class="d-inline-block">
-            <b-button href="#" variant="info">Go somewhere</b-button>
+            <b-button href="#" variant="info" class="flight-card__add-btn">
+              <font-awesome-icon icon="long-arrow-alt-right" />
+            </b-button>
           </b-col>
           <b-col cols="3" class="d-inline-block">
             <b-card-text>
@@ -71,5 +73,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@include block("flight-card") {
 
+  @include element("add-btn") {
+    font-size: 50px;
+    display: inline;
+    padding-top: 0;
+    padding-bottom: 0;
+    max-height: 45px;
+    display: inline-flex;
+    align-items: center;
+  }
+}
 </style>
