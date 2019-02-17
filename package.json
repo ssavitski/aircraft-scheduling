@@ -25,6 +25,7 @@
     "babel-eslint": "^10.0.1",
     "babel-plugin-istanbul": "^5.1.0",
     "babel-plugin-module-resolver": "^3.2.0",
+    "babel-plugin-rewire": "^1.2.0",
     "bemify": "^0.1.2",
     "breakpoint-sass": "^2.7.1",
     "breakpoint-slicer": "^2.0.0",

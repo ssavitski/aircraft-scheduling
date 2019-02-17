@@ -14,6 +14,7 @@ module.exports = {
         [ 'istanbul', {
           'exclude': ['tests/**/*.js'],
         } ],
+        [ 'rewire' ],
       ],
     },
   },
