@@ -1,6 +1,6 @@
 export const aircraft = {
-  base: "EGKK",
+  base: 'EGKK',
   economySeats: 186,
-  ident: "GABCD",
-  type: "A320",
+  ident: 'GABCD',
+  type: 'A320',
 };

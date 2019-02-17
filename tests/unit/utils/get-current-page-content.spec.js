@@ -13,7 +13,7 @@ describe('utils', () => {
       content: flights,
     };
     const contentPart = getCurrentPageContent(state);
-    const result = state.content.slice(6, 9);
+    const result = state.content.slice(2, 5);
 
     expect(contentPart).toEqual(jasmine.objectContaining(result));
   });

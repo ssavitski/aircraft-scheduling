@@ -15,15 +15,15 @@ describe('getters', () => {
 describe('actions', () => {
 
   it(':setActiveAircraft', () => {
-    const state = {
+    const context = {
       commit: jasmine.createSpy('commit'),
     };
     
-    options.actions.setActiveAircraft(state, aircraft);
+    options.actions.setActiveAircraft(context, aircraft);
 
-    const { args } = state.commit.calls.first();
+    const { args } = context.commit.calls.first();
 
-    expect(state.commit).toHaveBeenCalled();
+    expect(context.commit).toHaveBeenCalled();
     expect(args[0]).toEqual('setActiveAircraft');
     expect(args[1]).toEqual(jasmine.objectContaining(aircraft));
   });

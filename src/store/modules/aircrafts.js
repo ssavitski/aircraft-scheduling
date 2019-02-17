@@ -23,8 +23,8 @@ export default {
   },
   actions: {
     // fetch aircrafts for specific page
-    getAircrafts(state, page) {
-      fetchContent(state, page, 'getAircrafts');
+    getAircrafts({ state, commit }, page = 0) {
+      fetchContent(commit, page * state.paginationParams.limit, 'getAircrafts');
     },
   },
   mutations: {

@@ -5,8 +5,6 @@
 
 export default function(state) {
   const { offset, limit } = state.paginationParams;
-  const start = offset * limit;
-  const end = start + limit;
 
-  return state.content.slice(start, end);
+  return state.content.slice(offset, offset + limit);
 }

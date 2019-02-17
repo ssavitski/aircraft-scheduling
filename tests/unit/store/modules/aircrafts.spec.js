@@ -32,18 +32,23 @@ describe('aircrafts - actions', () => {
 
   it(':getAircrafts', () => {
     const fetchContent = jasmine.createSpy('fetchContent');
-    const state = 'state';
-    const page = 'page';
+    const context = {
+      state: {
+        paginationParams: { limit: 25 },
+      },
+      commit: 'commit',
+    };
+    const page = 2;
     const methodName = 'getAircrafts';
 
     aircrafts.__Rewire__('fetchContent', fetchContent);
-    aircrafts.actions.getAircrafts(state, page);
+    aircrafts.actions.getAircrafts(context, page);
 
     const { args } = fetchContent.calls.first();
 
     expect(fetchContent).toHaveBeenCalled();
-    expect(args[0]).toEqual(state);
-    expect(args[1]).toEqual(page);
+    expect(args[0]).toEqual(context.commit);
+    expect(args[1]).toEqual(page * context.state.paginationParams.limit);
     expect(args[2]).toEqual(methodName);
   });
 });

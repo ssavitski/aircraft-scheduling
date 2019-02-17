@@ -23,8 +23,8 @@ export default {
   },
   actions: {
     // fetch flights for specific page
-    getFlights(state, page) {
-      fetchContent(state, page, 'getFlights');
+    getFlights({ state, commit }, page = 0) {
+      fetchContent(commit, page * state.paginationParams.limit, 'getFlights');
     },
   },
   mutations: {
