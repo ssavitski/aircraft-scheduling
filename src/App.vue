@@ -10,17 +10,17 @@
     </b-row>
 
     <b-row>
-      <b-col sm="3" cols="12" class="d-inline-block">
+      <b-col md="3" cols="12" class="d-inline-block">
         <header class="mb-3">Aircrafts</header>
         <aircrafts-list></aircrafts-list>
       </b-col>
-      <b-col sm="5" cols="12" class="d-inline-block">
+      <b-col md="5" cols="12" class="d-inline-block">
         <header class="mb-3">
           Rotation <strong>{{ activeAircraft.ident }}</strong>
         </header>
         <flights-list></flights-list>
       </b-col>
-      <b-col sm="4" cols="12" class="d-inline-block">
+      <b-col md="4" cols="12" class="d-inline-block">
         <header class="mb-3">Flights</header>
       </b-col>
     </b-row>
