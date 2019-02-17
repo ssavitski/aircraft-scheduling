@@ -1,13 +1,30 @@
 import aircrafts from '@/store/modules/aircrafts';
+import { aircraft } from '~/mocks/aircrafts';
 
 describe('aircrafts - getters', () => {
 
-  it(':currentPage', () => {
+  it(':currentOffset', () => {
     const state = {
       paginationParams: { offset: 5 },
     };
 
-    expect(aircrafts.getters.currentPage(state)).toEqual(5);
+    expect(aircrafts.getters.currentOffset(state)).toEqual(5);
+  });
+
+  it(':perPage', () => {
+    const state = {
+      paginationParams: { limit: 25 },
+    };
+
+    expect(aircrafts.getters.perPage(state)).toEqual(25);
+  });
+
+  it(':totalRows', () => {
+    const state = {
+      paginationParams: { total: 560 },
+    };
+
+    expect(aircrafts.getters.totalRows(state)).toEqual(560);
   });
 });
 
@@ -28,5 +45,23 @@ describe('aircrafts - actions', () => {
     expect(args[0]).toEqual(state);
     expect(args[1]).toEqual(page);
     expect(args[2]).toEqual(methodName);
+  });
+});
+
+describe('aircraft - mutations', () => {
+
+  it(':add-content', () => {
+    const aircraftItems = [ aircraft ];
+    const copiedAircrafts = aircraftItems.slice();
+    const state = {
+      content: aircraftItems,
+    };
+
+    copiedAircrafts[0].ident = 'ABCDE';
+
+    aircrafts.mutations.addContent(state, copiedAircrafts);
+
+    expect(state.content).toContain(aircraft);
+    expect(state.content).toContain(copiedAircrafts[0]);
   });
 });

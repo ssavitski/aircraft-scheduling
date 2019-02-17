@@ -1,5 +1,5 @@
 import getCurrentPageContent from '@/utils/get-current-page-content';
-import updateContent from '@/utils/update-content';
+import removeDuplicates from '@/utils/remove-duplicates';
 import updatePaginationParams from '@/utils/update-pagination-params';
 import fetchContent from '@/utils/fetch-content';
 
@@ -14,8 +14,10 @@ export default {
     },
   },
   getters: {
-    // get current page
-    currentPage: state => state.paginationParams.offset,
+    // get pagination params
+    currentOffset: state => state.paginationParams.offset,
+    perPage: state => state.paginationParams.limit,
+    totalRows: state => state.paginationParams.total,
     // get content for current page
     content: getCurrentPageContent,
   },
@@ -27,7 +29,11 @@ export default {
   },
   mutations: {
     // add new aircrafts to the content array
-    addContent: updateContent,
+    addContent(state, content) {
+      const data = state.content.concat(content);
+
+      state.content = removeDuplicates(data, 'ident');
+    },
     // update pagination params with values fetched from server
     setPaginationParams: updatePaginationParams,
   },

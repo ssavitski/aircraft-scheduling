@@ -10,7 +10,7 @@ const airService = {
   getAircrafts(page = 0) {
     return new Promise(resolve => {
       axios.get(`/aircrafts?offset=${page}`).then(resp =>
-        resolve(resp)
+        resolve(resp.data)
       );
     });
   },
@@ -32,7 +32,7 @@ const airService = {
   getFlights(page = 0) {
     return new Promise(resolve => {
       axios.get(`/flights?offset=${page}`).then(resp =>
-        resolve(resp)
+        resolve(resp.data)
       );
     });
   },

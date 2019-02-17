@@ -6,18 +6,27 @@ import aircrafts from '@/store/modules/aircrafts';
 
 Vue.use(Vuex);
 
-export default new Vuex.Store({
+export const options = {
   state: {
-
+    activeAircraft: {},
+  },
+  getters: {
+    activeAircraft: state => state.activeAircraft,
   },
   mutations: {
-
+    setActiveAircraft(state, aircraft) {
+      state.activeAircraft = aircraft;
+    },
   },
   actions: {
-
+    setActiveAircraft({ commit }, aircraft) {
+      commit('setActiveAircraft', aircraft);
+    },
   },
   modules: {
     flights,
     aircrafts,
   },
-});
+};
+
+export default new Vuex.Store(options);

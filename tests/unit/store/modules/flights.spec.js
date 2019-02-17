@@ -1,13 +1,30 @@
 import flights from '@/store/modules/flights';
+import flightItems, { flight } from '~/mocks/flights';
 
 describe('flights - getters', () => {
 
-  it(':currentPage', () => {
+  it(':currentOffset', () => {
     const state = {
       paginationParams: { offset: 5 },
     };
 
-    expect(flights.getters.currentPage(state)).toEqual(5);
+    expect(flights.getters.currentOffset(state)).toEqual(5);
+  });
+
+  it(':perPage', () => {
+    const state = {
+      paginationParams: { limit: 25 },
+    };
+
+    expect(flights.getters.perPage(state)).toEqual(25);
+  });
+
+  it(':totalRows', () => {
+    const state = {
+      paginationParams: { total: 560 },
+    };
+
+    expect(flights.getters.totalRows(state)).toEqual(560);
   });
 });
 
@@ -28,5 +45,19 @@ describe('flights - actions', () => {
     expect(args[0]).toEqual(state);
     expect(args[1]).toEqual(page);
     expect(args[2]).toEqual(methodName);
+  });
+});
+
+describe('flights - mutations', () => {
+
+  it(':add-content', () => {
+    const state = {
+      content: [ flight ],
+    };
+
+    flights.mutations.addContent(state, flightItems);
+
+    expect(state.content).toContain(flight);
+    expect(state.content).toContain(flightItems[1]);
   });
 });

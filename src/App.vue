@@ -15,7 +15,9 @@
         <aircrafts-list></aircrafts-list>
       </b-col>
       <b-col sm="5" cols="12" class="d-inline-block">
-        <header class="mb-3">Rotation</header>
+        <header class="mb-3">
+          Rotation <strong>{{ activeAircraft.ident }}</strong>
+        </header>
         <flights-list></flights-list>
       </b-col>
       <b-col sm="4" cols="12" class="d-inline-block">
@@ -27,6 +29,7 @@
 
 <script>
 import datePicker from 'vue-bootstrap-datetimepicker';
+import { mapGetters } from 'vuex';
 
 import aircraftsList from '@/components/AircraftsList';
 import FlightsList from '@/components/FlightsList';
@@ -53,6 +56,16 @@ export default {
         maxDate: currentDate,
       },     
     };
+  },
+
+  created()  {
+    this.$store.dispatch('flights/getFlights');
+  },
+
+  computed: {
+    ...mapGetters([ 
+      'activeAircraft',
+    ]),
   },
 };
 </script>
