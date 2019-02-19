@@ -5,11 +5,11 @@ axios.defaults.baseURL = process.env.VUE_APP_AIR_HOST;
 const airService = {
   /**
    * Get all aircrafts with pagination
-   * @param {*} page - page number
+   * @param {*} offset - offset from first record
    */
-  getAircrafts(page = 0) {
+  getAircrafts(offset = 0) {
     return new Promise(resolve => {
-      axios.get(`/aircrafts?offset=${page}`).then(resp =>
+      axios.get(`/aircrafts?offset=${offset}`).then(resp =>
         resolve(resp.data)
       );
     });
@@ -27,11 +27,11 @@ const airService = {
   },
   /**
    * Get all flights with pagination
-   * @param {*} page - page number
+   * @param {*} offset - offset from first record
    */
-  getFlights(page = 0) {
+  getFlights(offset = 0) {
     return new Promise(resolve => {
-      axios.get(`/flights?offset=${page}`).then(resp =>
+      axios.get(`/flights?offset=${offset}`).then(resp =>
         resolve(resp.data)
       );
     });

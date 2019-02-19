@@ -4,3 +4,7 @@ export const aircraft = {
   ident: 'GABCD',
   type: 'A320',
 };
+
+export default [
+  aircraft,
+];
