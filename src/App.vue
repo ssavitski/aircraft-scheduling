@@ -1,6 +1,6 @@
 <template>
-  <b-container fluid id="app" class="mt-5">
-    <b-row class="justify-content-center mb-4">
+  <b-container fluid id="app">
+    <b-row class="justify-content-center pb-4 pt-5" ref="datePickerWrapper">
       <b-col cols="10" sm="3">
         <date-picker 
           v-model="date" 
@@ -9,19 +9,19 @@
       </b-col>
     </b-row>
 
-    <b-row>
-      <b-col md="3" cols="12" class="d-inline-block">
-        <header class="mb-3">Aircrafts</header>
-        <aircrafts-list></aircrafts-list>
+    <b-row class="app-content" ref="appContent">
+      <b-col md="3" cols="12" class="d-inline-block app-content__col">
+        <header class="pb-3">Aircrafts</header>
+        <aircrafts-list />
       </b-col>
-      <b-col md="5" cols="12" class="d-inline-block">
-        <header class="mb-3">
+      <b-col md="5" cols="12" class="d-inline-block app-content__col">
+        <header class="pb-3">
           Rotation <strong>{{ activeAircraft.ident }}</strong>
         </header>
-        <flights-list></flights-list>
       </b-col>
-      <b-col md="4" cols="12" class="d-inline-block">
-        <header class="mb-3">Flights</header>
+      <b-col md="4" cols="12" class="d-inline-block app-content__col">
+        <header class="pb-3" ref="flightsHeader">Flights</header>
+        <flights-list />
       </b-col>
     </b-row>
   </b-container>
@@ -54,12 +54,30 @@ export default {
         format: 'Do MMMM YYYY',
         minDate: currentDate,
         maxDate: currentDate,
-      },     
+      },
     };
   },
 
   created()  {
     this.$store.dispatch('flights/getFlights');
+  },
+
+  mounted() {
+    const { 
+      datePickerWrapper, 
+      appContent, 
+      flightsHeader, 
+    } = this.$refs;
+
+    if (datePickerWrapper && appContent) {
+      appContent.style.height = `calc(100% - ${datePickerWrapper.clientHeight}px)`;
+    }
+
+    if (flightsHeader) {
+      const flightList = this.$el.querySelector('.flights-list');
+
+      flightList.style.height = `calc(100% - ${flightsHeader.clientHeight}px)`;
+    }
   },
 
   computed: {
@@ -70,12 +88,30 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+html,
+body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
 #app {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
   max-width: $screen-desktop;
+  height: 100%;
+}
+
+@include block("app-content") {
+
+  @include element("col") {
+    height: 100%;
+  }
 }
 </style>

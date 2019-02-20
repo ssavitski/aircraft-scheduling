@@ -19,7 +19,6 @@ describe('FlightsList.vue', () => {
     'b-row',
     'b-pagination',
     'font-awesome-icon',
-    'b-button',
   ];
 
   beforeEach(() => {
