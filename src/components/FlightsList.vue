@@ -1,10 +1,16 @@
 <template>
   <section class="flights-list">
-    <div class="flights-list__wrapper" ref="flightsListWrapper">
+    <draggable 
+      v-model="flightsList" 
+      :options="draggableOptions" 
+      @start="drag=true" 
+      @end="drag=false"
+      class="flights-list__wrapper" 
+      ref="flightsListWrapper">
       <b-card-group 
         class="flight-card mb-3"
         deck
-        v-for="(flight, index) in content"
+        v-for="(flight, index) in flightsList"
         :key="index">
         <b-card
           :header="`Flight: ${flight.id}`"
@@ -29,7 +35,7 @@
           </b-row>
         </b-card>
       </b-card-group>
-    </div>
+    </draggable>
 
     <b-pagination 
       size="sm" 
@@ -43,12 +49,23 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import draggable from 'vuedraggable';
 
 export default {
+  components: {
+    draggable,
+  },
+
   data() {
     return {
       // current page with default value
       currentPage: 1,
+      // options for drag'n'drop ability
+      draggableOptions: {
+        group:'flights',
+      },
+      // list of flights based on identical list from store for current page
+      flightsList: [],
     };
   },
 
@@ -58,7 +75,7 @@ export default {
     if (flightsListWrapper) {
       const pagination = this.$el.querySelector('.flights-list__pagination');
 
-      flightsListWrapper.style.height = `calc(100% - ${pagination.clientHeight}px)`;
+      flightsListWrapper.$el.style.height = `calc(100% - ${pagination.clientHeight}px)`;
     }
   },
 
@@ -81,6 +98,15 @@ export default {
         this.$store.dispatch('flights/getFlights', page);
       },
     },
+    // update outputted list 
+    // if respective flights list has been changed in store
+    content: {
+      immediate: true,
+
+      handler() {
+        this.flightsList = this.content.slice();
+      },
+    },
   },
 };
 </script>
@@ -90,6 +116,12 @@ export default {
   margin-left: 0;
   margin-right: 0;
   cursor: move;
+  transition: 0.25s;
+
+  &:hover,
+  &:focus {
+    filter: brightness(95%);
+  }
 
   @include element("item") {
     margin-left: 0;

@@ -19,6 +19,7 @@ describe('FlightsList.vue', () => {
     'b-row',
     'b-pagination',
     'font-awesome-icon',
+    'draggable',
   ];
 
   beforeEach(() => {
@@ -56,5 +57,15 @@ describe('FlightsList.vue', () => {
 
     expect(getFlights).toHaveBeenCalled();
     expect(getFlights.calls.first().args[1]).toEqual(4);
+  });
+
+  it('should change flights list outputed in the template if respective list has been changed in store', () => {
+    const wrapper = shallowMount(FlightsList, { store, localVue, stubs });
+    
+    expect(wrapper.vm.flightsList.length).toEqual(modules.flights.state.content.length);
+
+    modules.flights.state.content = [];
+
+    expect(wrapper.vm.flightsList.length).toEqual(0);
   });
 });
