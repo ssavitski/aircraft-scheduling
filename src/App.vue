@@ -11,16 +11,17 @@
 
     <b-row class="app-content" ref="appContent">
       <b-col md="3" cols="12" class="d-inline-block app-content__col">
-        <header class="pb-3">Aircrafts</header>
+        <header class="pb-3 app-content__header">Aircrafts</header>
         <aircrafts-list />
       </b-col>
-      <b-col md="5" cols="12" class="d-inline-block app-content__col">
-        <header class="pb-3">
+      <b-col md="6" cols="12" class="d-inline-block app-content__col">
+        <header class="pb-3 app-content__header">
           Rotation <strong>{{ activeAircraft.ident }}</strong>
         </header>
+        <rotation-list />
       </b-col>
-      <b-col md="4" cols="12" class="d-inline-block app-content__col">
-        <header class="pb-3" ref="flightsHeader">Flights</header>
+      <b-col md="3" cols="12" class="d-inline-block app-content__col">
+        <header class="pb-3 app-content__header" ref="flightsHeader">Flights</header>
         <flights-list />
       </b-col>
     </b-row>
@@ -31,8 +32,9 @@
 import datePicker from 'vue-bootstrap-datetimepicker';
 import { mapGetters } from 'vuex';
 
-import aircraftsList from '@/components/AircraftsList';
+import AircraftsList from '@/components/AircraftsList';
 import FlightsList from '@/components/FlightsList';
+import RotationList from '@/components/RotationList';
 
 // Create current date
 const currentDate = new Date();
@@ -43,8 +45,9 @@ export default {
 
   components: {
     datePicker,
-    aircraftsList,
+    AircraftsList,
     FlightsList,
+    RotationList,
   },
 
   data() {
@@ -58,25 +61,14 @@ export default {
     };
   },
 
-  created()  {
-    this.$store.dispatch('flights/getFlights');
-  },
-
   mounted() {
     const { 
       datePickerWrapper, 
-      appContent, 
-      flightsHeader, 
+      appContent,  
     } = this.$refs;
 
     if (datePickerWrapper && appContent) {
       appContent.style.height = `calc(100% - ${datePickerWrapper.clientHeight}px)`;
-    }
-
-    if (flightsHeader) {
-      const flightList = this.$el.querySelector('.flights-list');
-
-      flightList.style.height = `calc(100% - ${flightsHeader.clientHeight}px)`;
     }
   },
 
@@ -112,6 +104,10 @@ body {
 
   @include element("col") {
     height: 100%;
+  }
+
+  @include element("header") {
+    height: $content-header-height;
   }
 }
 </style>

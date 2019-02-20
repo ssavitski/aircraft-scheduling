@@ -7,34 +7,11 @@
       @end="drag=false"
       class="flights-list__wrapper" 
       ref="flightsListWrapper">
-      <b-card-group 
-        class="flight-card mb-3"
-        deck
+      <flight-card
+        class="mb-3"
         v-for="(flight, index) in flightsList"
-        :key="index">
-        <b-card
-          :header="`Flight: ${flight.id}`"
-          header-tag="header"
-          class="flight-card__item">
-          <b-row>
-            <b-col cols="4" class="d-inline-block">
-              <b-card-text>
-                {{ flight.origin }}<br>{{ flight.readable_departure }}
-              </b-card-text>
-            </b-col>
-            <b-col cols="4" class="d-inline-block">
-              <div class="flight-card__add-btn">
-                <font-awesome-icon icon="plane" />
-              </div>
-            </b-col>
-            <b-col cols="4" class="d-inline-block">
-              <b-card-text>
-                {{ flight.destination }}<br>{{ flight.readable_arrival }}
-              </b-card-text>
-            </b-col>
-          </b-row>
-        </b-card>
-      </b-card-group>
+        :key="index"
+        :flight="flight" />
     </draggable>
 
     <b-pagination 
@@ -51,9 +28,12 @@
 import { mapGetters } from 'vuex';
 import draggable from 'vuedraggable';
 
+import FlightCard from '@/components/FlightCard';
+
 export default {
   components: {
     draggable,
+    FlightCard,
   },
 
   data() {
@@ -67,16 +47,6 @@ export default {
       // list of flights based on identical list from store for current page
       flightsList: [],
     };
-  },
-
-  mounted() {
-    const { flightsListWrapper } = this.$refs;
-
-    if (flightsListWrapper) {
-      const pagination = this.$el.querySelector('.flights-list__pagination');
-
-      flightsListWrapper.$el.style.height = `calc(100% - ${pagination.clientHeight}px)`;
-    }
   },
 
   computed: {
@@ -112,41 +82,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@include block("flight-card") {
-  margin-left: 0;
-  margin-right: 0;
-  cursor: move;
-  transition: 0.25s;
-
-  &:hover,
-  &:focus {
-    filter: brightness(95%);
-  }
-
-  @include element("item") {
-    margin-left: 0;
-    margin-right: 0;
-  }
-
-  @include element("add-btn") {
-    font-size: 50px;
-    display: inline;
-    padding-top: 0;
-    padding-bottom: 0;
-    max-height: 45px;
-    display: inline-flex;
-    align-items: center;
-  }
-}
-
 @include block("flights-list") {
+  height: calc(100% - #{$content-header-height});
 
   @include element("wrapper") {
     overflow: auto;
+    height: calc(100% - #{$pagination-height});
   }
 
   @include element("pagination") {
     margin: 0;
+    height: $pagination-height;
   }
 }
 </style>

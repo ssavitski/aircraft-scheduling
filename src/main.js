@@ -3,6 +3,7 @@ import BootstrapVue from 'bootstrap-vue';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faPlane } from '@fortawesome/free-solid-svg-icons/faPlane';
+import { faTimesCircle } from '@fortawesome/free-solid-svg-icons/faTimesCircle';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
@@ -11,7 +12,7 @@ import 'pc-bootstrap4-datetimepicker/build/css/bootstrap-datetimepicker.css';
 import App from '@/App.vue';
 import store from '@/store';
 
-library.add(faPlane);
+library.add(faPlane, faTimesCircle);
 
 Vue.use(BootstrapVue);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
