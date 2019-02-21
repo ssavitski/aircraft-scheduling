@@ -1,7 +1,7 @@
 import Vuex from 'vuex';
 import { shallowMount, createLocalVue } from '@vue/test-utils';
 
-import FlightsList from '@/components/FlightsList.vue';
+import FlightsList from '@/components/FlightsList';
 import flights from '~/mocks/flights';
 
 const localVue = createLocalVue();

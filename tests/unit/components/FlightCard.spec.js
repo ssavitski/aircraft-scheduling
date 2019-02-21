@@ -1,6 +1,6 @@
 import { shallowMount } from '@vue/test-utils';
 
-import FlightCard from '@/components/FlightCard.vue';
+import FlightCard from '@/components/FlightCard';
 import { flight } from '~/mocks/flights';
 
 describe('FlightCard.vue', () => {
