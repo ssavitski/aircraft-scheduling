@@ -1,5 +1,9 @@
 <template>
   <section class="rotation-list">
+    <errors-list 
+      :errors="errors" 
+      :show="isInvalid && rotationList.length > 1" />
+
     <draggable 
       v-model="rotationList" 
       :options="draggableOptions" 
@@ -19,8 +23,9 @@
             mode="rotation" />
         </div>
     </draggable>
+
     <div v-if="!rotationList.length" class="rotation-list__drag-msg">
-      Drop flights from the right to create rotation for selected Aircraft
+      Drop flights from the right to create rotation for selected date and Aircraft
     </div>
   </section>
 </template>
@@ -30,11 +35,14 @@ import draggable from 'vuedraggable';
 
 import removeElement from '@/utils/remove-element';
 import FlightCard from '@/components/FlightCard';
+import ErrorsList from '@/components/ErrorsList';
+import errorsList from '@/data/errors-list';
 
 export default {
   components: {
     draggable,
     FlightCard,
+    ErrorsList,
   },
 
   data() {
@@ -53,6 +61,56 @@ export default {
       removeElement(this.rotationList, flight);
     },
   },
+
+  computed: {
+    // check if rotation list is invalid
+    isInvalid() {
+      return this.errors.some(error => error.show);
+    },
+    // show errors if rotation list does not fit requirements
+    errors() {
+      const turnaroundTime = 2400; // seconds
+      // list of requirements for rotation flights order
+      const errors = errorsList.slice();
+      const { length:flightsLength } = this.rotationList;
+
+      if (flightsLength <= 1) {
+        return errors;
+      }
+
+      this.rotationList.forEach((flight, index) => {
+        let { readable_arrival, readable_departure } = flight;
+        readable_arrival = parseInt(readable_arrival.split(':')[0]);
+        readable_departure = parseInt(readable_departure.split(':')[0]);
+
+        if (readable_departure > readable_arrival) {
+          errors[2].show = true;
+        }
+
+        if (index + 1 === flightsLength) {
+          return false;
+        }
+
+        const {
+          origin,
+          departuretime,
+        } = this.rotationList[index + 1];
+        const { destination, arrivaltime } = flight;
+
+        if (destination !== origin) {
+          errors[0].show = true;
+        }
+
+        if (departuretime < arrivaltime) {
+          errors[3].show = true;
+        } else if ((departuretime - arrivaltime) < turnaroundTime) {
+          errors[1].show = true;
+        }
+      });
+
+      return errors;
+    },
+  },
 };
 </script>
 
@@ -67,6 +125,8 @@ $block:       "rotation-list";
   @include element("draggable") {
     min-height: $min-height;
     position: relative;
+    overflow: auto;
+    padding: 0 15px;
   }
 
   @include element("drag-msg") {

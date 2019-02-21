@@ -91,6 +91,10 @@ body {
   flex-direction: column;
 }
 
+.hide {
+  display: none !important;
+}
+
 #app {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
