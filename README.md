@@ -78,7 +78,7 @@ All static data used by "Aircraft scheduling" app like list of error messages, l
 
 **src/utils** folder serves for different helper functions used throughout "Aircraft scheduling" components. Such functions/helpers like remove duplicate elements from array, remove specific element from array, repeated functions for store, etc.
 
-For all kind of files which can't be placed inside other directories but are used by Embed there is folder named Assets **src/assets**. Currently there are images.
+For all kind of files which can't be placed inside other directories but are used by "Aircraft scheduling" app there is folder named Assets **src/assets**. Currently there are images.
 
 ## Project setup
 ```
