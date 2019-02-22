@@ -13,7 +13,7 @@ Currently app has been developed and tested only in [Chrome](https://www.google.
 ## Project structure
 
 Application is built with [Vue.js](https://vuejs.org/). 
-For stylization [SCSS](https://sass-lang.com) preprocessor is used. 
+For stylization well known [Bootstrap CSS framework](https://getbootstrap.com/) is used. And actually its wrapper for Vue.js which is [bootstrap-vue](https://bootstrap-vue.js.org/) addon. 
 
 [Vuex](https://vuex.vuejs.org) is used for storage of state of "Aircraft scheduling" Application. 
 For fetching data **air.service** is used as a middleware which provides more simpler interface to communicate with *aircraft API*.
