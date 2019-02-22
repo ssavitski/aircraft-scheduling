@@ -1,6 +1,3 @@
-# aircraft-scheduling
-
-
 # Aircraft scheduling app
 
 App serves for aircraft scheduling on specific date in an intuitive and easy way for airline owners. It gives more control of this process in comparison with processes automation by PC.
@@ -10,7 +7,7 @@ App serves for aircraft scheduling on specific date in an intuitive and easy way
 
 ## Browsers support
 
-Currently app has been developed and tested only in [Chrome](https://www.google.com/chrome/) but there is no problem to add its support for other browsers.
+Currently app has been developed and tested only in [Chrome](https://www.google.com/chrome/).
 
 
 ## Project structure
