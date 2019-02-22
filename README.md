@@ -13,7 +13,7 @@ Currently app has been developed and tested only in [Chrome](https://www.google.
 ## Project structure
 
 Application is built with [Vue.js](https://vuejs.org/). 
-For stylization [SCSS](https://sass-lang.com) preprocessor is used. 
+For stylization well known [Bootstrap CSS framework](https://getbootstrap.com/) is used. And actually its wrapper for Vue.js which is [bootstrap-vue](https://bootstrap-vue.js.org/) addon. 
 
 [Vuex](https://vuex.vuejs.org) is used for storage of state of "Aircraft scheduling" Application. 
 For fetching data **air.service** is used as a middleware which provides more simpler interface to communicate with *aircraft API*.
@@ -65,6 +65,7 @@ Application variables used in styles and other settings are placed in **src/styl
 There are 2 libraries which used for responsiveness of the Application:
  - [breakpoint-sass](http://breakpoint-sass.com/)
  - [breakpoint-slicer](https://github.com/lolmaus/breakpoint-slicer)
+
 They provide mixins for using media-queries.
 
 Icon set is taken from [Font Awesome](https://fontawesome.com/) library. All used icons are included in **main.js** file.
@@ -103,7 +104,7 @@ npm run lint
 ```
 [ESLint](https://eslint.org/) helps to detect errors and potential problems in JavaScript code. Also pre-commit hook helps to keep code consistent throughout the App among different developers.
 
-### Run your unit tests
+### Run unit tests
 ```
 npm run test:unit
 ```
