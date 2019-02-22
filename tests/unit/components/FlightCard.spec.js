@@ -27,7 +27,7 @@ describe('FlightCard.vue', () => {
       const wrapper = shallowMount(FlightCard, { propsData, stubs });
 
       expect(wrapper.find('.flight-card__item').attributes('header')).toEqual(flight.id);
-      expect(wrapper.vm.cols).toEqual(jasmine.objectContaining([ 5, 2, 5 ]));
+      expect(wrapper.vm.cols).toEqual(jasmine.objectContaining([ 6, 0, 6 ]));
 
       wrapper.setProps({ mode: 'rotation' });
 

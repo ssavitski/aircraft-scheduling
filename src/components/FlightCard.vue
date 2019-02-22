@@ -5,17 +5,17 @@
       header-tag="header"
       class="flight-card__item">
       <b-row>
-        <b-col :cols="cols[0]" class="d-inline-block flight-card__col">
+        <b-col :cols="cols[0]" v-if="cols[0]" class="d-inline-block flight-card__col">
           <b-card-text class="flight-card__origin">
             {{ flight.origin }}<br>{{ flight.readable_departure }}
           </b-card-text>
         </b-col>
-        <b-col :cols="cols[1]" class="d-inline-block flight-card__col">
+        <b-col :cols="cols[1]" v-if="cols[1]" class="d-inline-block flight-card__col">
           <div class="flight-card__plane" v-if="mode === 'rotation'">
             <font-awesome-icon icon="plane" />
           </div>
         </b-col>
-        <b-col :cols="cols[2]" class="d-inline-block flight-card__col">
+        <b-col :cols="cols[2]" v-if="cols[2]" class="d-inline-block flight-card__col">
           <b-card-text class="flight-card__destination">
             {{ flight.destination }}<br>{{ flight.readable_arrival }}
           </b-card-text>
@@ -49,7 +49,7 @@ export default {
     },
     // cols dimensions based on different modes
     cols() {
-      let cols = [ 5, 2, 5 ];
+      let cols = [ 6, 0, 6 ];
 
       if (this.mode === 'rotation') {
         cols = [ 4, 4, 4 ];
@@ -76,6 +76,7 @@ export default {
   @include element("item") {
     margin-left: 0;
     margin-right: 0;
+    word-wrap: normal;
   }
 
   @include element("plane") {

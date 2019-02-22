@@ -108,6 +108,13 @@ body {
 
   @include element("col") {
     height: 100%;
+    overflow: hidden;
+
+    @include to(3) {
+      height: auto;
+      max-height: 500px;
+      margin-bottom: 40px;
+    }
   }
 
   @include element("header") {

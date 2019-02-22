@@ -149,6 +149,14 @@ $block:       "rotation-list";
     position: relative;
     overflow: auto;
     padding: 0 15px;
+
+    @include to(3) {
+      min-height: $min-height + 30;
+    }
+
+    @include to(1) {
+      min-height: $min-height + 70;
+    }
   }
 
   @include element("drag-msg") {
@@ -159,6 +167,7 @@ $block:       "rotation-list";
     padding: 54px 54px;
     position: absolute;
     top: 0;
+    width: 100%;
   }
 
   @include element("item") {
