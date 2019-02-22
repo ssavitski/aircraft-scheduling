@@ -104,7 +104,7 @@ npm run lint
 ```
 [ESLint](https://eslint.org/) helps to detect errors and potential problems in JavaScript code. Also pre-commit hook helps to keep code consistent throughout the App among different developers.
 
-### Run your unit tests
+### Run unit tests
 ```
 npm run test:unit
 ```
