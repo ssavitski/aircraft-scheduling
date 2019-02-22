@@ -1,13 +1,18 @@
 import { shallowMount } from '@vue/test-utils';
 
 import RotationList from '@/components/RotationList';
+import TimeLine from '@/components/TimeLine';
+import ErrorsList from '@/components/ErrorsList';
 import flights, { flight } from '~/mocks/flights';
 
 describe('RotationList.vue', () => {
-  const stubs = [
-    'draggable',
-    'font-awesome-icon',
-  ];
+  const stubs = {
+    'draggable': true,
+    'font-awesome-icon': true,
+    'time-line': TimeLine,
+    'errors-list': ErrorsList,
+    'b-alert': true,
+  };
   
   it('should remove flight from the list', () => {
     const rotationList = [ flight ];
@@ -44,19 +49,53 @@ describe('RotationList.vue', () => {
     } = flight;
     const rotationList = flights.concat(flight);
     const wrapper = shallowMount(RotationList, { stubs });
-    const isShown = () => wrapper.find('errors-list-stub').attributes('show');
+    const isVisible = () => wrapper.find('.errors-wrapper').isVisible();
 
-    expect(isShown()).toBeFalsy();
+    expect(isVisible()).toBeFalsy();
 
     flight.readable_departure = '06:30';
     flight.readable_arrival = '04:15';
 
     wrapper.setData({ rotationList });
 
-    expect(isShown()).toBeTruthy();
+    expect(isVisible()).toBeTruthy();
 
     flight.readable_departure = readable_departure;
     flight.readable_arrival = readable_arrival;
+  });
+
+  it('adjustHeight method should be called on component mount and errors toggle', done => {
+    const rotationList = flights.concat(flight);
+    const methods = {
+      adjustHeight: jasmine.createSpy('adjustHeight'),
+    };
+    const wrapper = shallowMount(RotationList, { stubs, methods });
+
+    expect(methods.adjustHeight).toHaveBeenCalled();
+
+    methods.adjustHeight.calls.reset();
+
+    wrapper.setData({ rotationList });
+
+    wrapper.vm.$nextTick(() => {
+      expect(methods.adjustHeight).toHaveBeenCalled();
+
+      done();
+    });
+  });
+
+  it('height of rotation list should be adjusted', done => {
+    const rotationList = flights.concat(flight);
+    const wrapper = shallowMount(RotationList, { stubs });
+    const listHeight = 'calc((100% - 0px) - 0px)';
+
+    wrapper.setData({ rotationList });
+
+    wrapper.vm.$nextTick(() => {
+      expect(wrapper.find('.rotation-list__draggable').element.style.height).toEqual(listHeight);
+
+      done();
+    });
   });
 
   describe('requirements to rotation list', () => {

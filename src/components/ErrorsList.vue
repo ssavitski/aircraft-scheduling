@@ -1,5 +1,8 @@
 <template>
-  <div @click="toggleErrorList">
+  <div 
+    v-show="show"
+    @click="toggleErrorList" 
+    class="errors-wrapper">
     <b-alert 
       :show="show"
       variant="danger"
@@ -71,11 +74,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@include block("errors-wrapper") {
+  padding-bottom: 10px;
+  height: 53px;
+}
+
 @include block("errors") {
   text-align: left;
   font-size: 14px;
   padding: 10px;
   cursor: pointer;
+  margin-bottom: 0;
+  position: relative;
+  z-index: 111;
 
   @include element("title") {
     margin-bottom: 0;

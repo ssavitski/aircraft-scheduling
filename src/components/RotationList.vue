@@ -2,7 +2,7 @@
   <section class="rotation-list">
     <errors-list 
       :errors="errors" 
-      :show="isInvalid && rotationList.length > 1" />
+      :show="isInvalid" />
 
     <draggable 
       v-model="rotationList" 
@@ -27,6 +27,8 @@
     <div v-if="!rotationList.length" class="rotation-list__drag-msg">
       Drop flights from the right to create rotation for selected date and Aircraft
     </div>
+
+    <time-line :rotation-list="rotationList" />
   </section>
 </template>
 
@@ -36,13 +38,15 @@ import draggable from 'vuedraggable';
 import removeElement from '@/utils/remove-element';
 import FlightCard from '@/components/FlightCard';
 import ErrorsList from '@/components/ErrorsList';
-import errorsList from '@/data/errors-list';
+import TimeLine from '@/components/TimeLine';
+import errors from '@/data/errors-list';
 
 export default {
   components: {
     draggable,
     FlightCard,
     ErrorsList,
+    TimeLine,
   },
 
   data() {
@@ -55,23 +59,35 @@ export default {
     };
   },
 
+  mounted() {
+    this.adjustHeight();
+  },
+
   methods: {
     // remove flight from the rotation
     removeFlight(flight) {
       removeElement(this.rotationList, flight);
+    },
+    // adjust height of rotation list to fit whole screen height
+    adjustHeight() {
+      const { clientHeight:timeLineHeight } = this.$el.querySelector('.timeline');
+      const { clientHeight:errorsHeight } = this.$el.querySelector('.errors-wrapper');
+      const listHeight = `calc(100% - ${timeLineHeight}px - ${errorsHeight}px)`;
+
+      this.$el.querySelector('.rotation-list__draggable').style.height = listHeight;
     },
   },
 
   computed: {
     // check if rotation list is invalid
     isInvalid() {
-      return this.errors.some(error => error.show);
+      return this.errors.some(error => error.show) && this.rotationList.length > 1;
     },
     // show errors if rotation list does not fit requirements
     errors() {
       const turnaroundTime = 2400; // seconds
       // list of requirements for rotation flights order
-      const errors = errorsList.slice();
+      errors.forEach(error => error.show = false);
       const { length:flightsLength } = this.rotationList;
 
       if (flightsLength <= 1) {
@@ -109,6 +125,12 @@ export default {
       });
 
       return errors;
+    },
+  },
+
+  watch: {
+    isInvalid() {
+      this.$nextTick(() => this.adjustHeight());
     },
   },
 };
