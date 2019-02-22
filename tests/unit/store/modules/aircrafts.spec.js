@@ -51,11 +51,24 @@ describe('aircrafts - actions', () => {
     expect(args[1]).toEqual(page * context.state.paginationParams.limit);
     expect(args[2]).toEqual(methodName);
   });
+
+  it(':setUtilization', () => {
+    const context = {
+      commit: jasmine.createSpy('commit'),
+    };
+    const aircraftData = { ident: aircraft.ident, utilization: 39 };
+
+    aircrafts.actions.setUtilization(context, aircraftData);
+
+    expect(context.commit).toHaveBeenCalled();
+    expect(context.commit.calls.first().args[0]).toEqual('setUtilization');
+    expect(context.commit.calls.first().args[1]).toEqual(aircraftData);
+  });
 });
 
 describe('aircraft - mutations', () => {
 
-  it(':add-content', () => {
+  it(':addContent', () => {
     const aircraftItems = [ aircraft ];
     const copiedAircrafts = aircraftItems.slice();
     const state = {
@@ -68,5 +81,16 @@ describe('aircraft - mutations', () => {
 
     expect(state.content).toContain(aircraft);
     expect(state.content).toContain(copiedAircrafts[0]);
+  });
+
+  it(':setUtilization', () => {
+    const aircraftItems = [ aircraft ];
+    const state = {
+      content: aircraftItems,
+    };
+    const aircraftData = { ident: aircraft.ident, utilization: 39 };
+
+    aircrafts.mutations.setUtilization(state, aircraftData);
+    expect(state.content[0].utilization).toEqual(aircraftData.utilization);
   });
 });

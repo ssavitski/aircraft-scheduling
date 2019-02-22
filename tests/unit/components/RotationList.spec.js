@@ -1,9 +1,14 @@
-import { shallowMount } from '@vue/test-utils';
+import Vuex from 'vuex';
+import { shallowMount, createLocalVue } from '@vue/test-utils';
 
 import RotationList from '@/components/RotationList';
 import TimeLine from '@/components/TimeLine';
 import ErrorsList from '@/components/ErrorsList';
 import flights, { flight } from '~/mocks/flights';
+import { aircraft } from '~/mocks/aircrafts';
+
+const localVue = createLocalVue();
+localVue.use(Vuex);
 
 describe('RotationList.vue', () => {
   const stubs = {
@@ -13,11 +18,35 @@ describe('RotationList.vue', () => {
     'errors-list': ErrorsList,
     'b-alert': true,
   };
+  let modules;
+  let state;
+  let getters;
+  let store;
+  const setUtilization = jasmine.createSpy('aircrafts/setUtilization');
+
+  beforeEach(() => {
+    getters = {
+      activeAircraft: state => state.activeAircraft,
+    };
+    state = {
+      activeAircraft: aircraft,
+    };
+    modules = {
+      aircrafts: {
+        namespaced: true,
+        actions: {
+          setUtilization,
+        },
+      },
+    };
+
+    store = new Vuex.Store({ modules, state, getters });
+  });
   
   it('should remove flight from the list', () => {
     const rotationList = [ flight ];
     const removeElement = jasmine.createSpy('removeElement');
-    const wrapper = shallowMount(RotationList, { stubs });
+    const wrapper = shallowMount(RotationList, { stubs, store, localVue });
 
     RotationList.__Rewire__('removeElement', removeElement);
 
@@ -32,7 +61,7 @@ describe('RotationList.vue', () => {
 
   it('should show drag\'n\'drop message if list is empty', () => {
     const rotationList = [ flight ];
-    const wrapper = shallowMount(RotationList, { stubs });
+    const wrapper = shallowMount(RotationList, { stubs, store, localVue });
     const getMsg = () => wrapper.find('.rotation-list__drag-msg').exists();
 
     expect(getMsg()).toBeTruthy();
@@ -48,7 +77,7 @@ describe('RotationList.vue', () => {
       readable_arrival,
     } = flight;
     const rotationList = flights.concat(flight);
-    const wrapper = shallowMount(RotationList, { stubs });
+    const wrapper = shallowMount(RotationList, { stubs, store, localVue });
     const isVisible = () => wrapper.find('.errors-wrapper').isVisible();
 
     expect(isVisible()).toBeFalsy();
@@ -69,7 +98,7 @@ describe('RotationList.vue', () => {
     const methods = {
       adjustHeight: jasmine.createSpy('adjustHeight'),
     };
-    const wrapper = shallowMount(RotationList, { stubs, methods });
+    const wrapper = shallowMount(RotationList, { stubs, methods, store, localVue });
 
     expect(methods.adjustHeight).toHaveBeenCalled();
 
@@ -86,7 +115,7 @@ describe('RotationList.vue', () => {
 
   it('height of rotation list should be adjusted', done => {
     const rotationList = flights.concat(flight);
-    const wrapper = shallowMount(RotationList, { stubs });
+    const wrapper = shallowMount(RotationList, { stubs, store, localVue });
     const listHeight = 'calc((100% - 0px) - 0px)';
 
     wrapper.setData({ rotationList });
@@ -109,7 +138,7 @@ describe('RotationList.vue', () => {
       flight.readable_arrival = '04:15';
 
       const rotationList = [ flights[0] ].concat(flight);
-      const wrapper = shallowMount(RotationList, { stubs });
+      const wrapper = shallowMount(RotationList, { stubs, store, localVue });
 
       wrapper.setData({ rotationList });
 
@@ -121,7 +150,7 @@ describe('RotationList.vue', () => {
 
     it('hours of arrival time of previous flight should be less than hours of departure time of next flight', () => {
       const rotationList = [ flights[0] ].concat(flight);
-      const wrapper = shallowMount(RotationList, { stubs });
+      const wrapper = shallowMount(RotationList, { stubs, store, localVue });
 
       wrapper.setData({ rotationList });
 
@@ -130,7 +159,7 @@ describe('RotationList.vue', () => {
 
     it('turnaround time should be not less then 40 min', () => {
       const rotationList = [ flight ].concat(flights[0]);
-      const wrapper = shallowMount(RotationList, { stubs });
+      const wrapper = shallowMount(RotationList, { stubs, store, localVue });
 
       wrapper.setData({ rotationList });
 
@@ -145,7 +174,7 @@ describe('RotationList.vue', () => {
       flight.readable_arrival = '08:20';
       flight.destination = 'RQPO';
       const rotationList = [ flight ].concat(flights[0]);
-      const wrapper = shallowMount(RotationList, { stubs });
+      const wrapper = shallowMount(RotationList, { stubs, store, localVue });
 
       wrapper.setData({ rotationList });
       expect(wrapper.vm.errors[0].show).toBeTruthy();

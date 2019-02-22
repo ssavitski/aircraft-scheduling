@@ -21,6 +21,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 import dimensionCells from '@/data/dimension-cells';
 
 export default {
@@ -40,6 +42,9 @@ export default {
   },
 
   computed: {
+    ...mapGetters([ 
+      'activeAircraft',
+    ]),
     // timeline cells
     cells() {
       const cells = [];
@@ -77,6 +82,20 @@ export default {
       });
 
       return cells;
+    },
+  },
+
+  watch: {
+    cells() {
+      const greenCells = this.cells.filter(cell => 
+        cell.color === 'green'
+      );
+      const { ident } = this.activeAircraft;
+      let utilization = 0;
+
+      greenCells.forEach(({ width }) => utilization += width);
+
+      this.$store.dispatch('aircrafts/setUtilization', { ident, utilization });
     },
   },
 };

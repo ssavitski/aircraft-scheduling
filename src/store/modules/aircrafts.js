@@ -26,8 +26,24 @@ export default {
     getAircrafts({ state, commit }, page = 0) {
       fetchContent(commit, page * state.paginationParams.limit, 'getAircrafts');
     },
+    // set utilization in percentage for specific aircraft
+    setUtilization({ commit }, aircraftData) {
+      commit('setUtilization', aircraftData);
+    },
   },
   mutations: {
+    // set utilization in percentage for specific aircraft
+    setUtilization(state, { ident, utilization }) {
+      const selected = state.content.filter(aircraft => 
+        aircraft.ident === ident
+      );
+
+      if (selected.length) {
+        selected[0].utilization = utilization;
+      }
+      // required for refreshing the component where aircrafts list is used
+      state.content = state.content.slice();
+    },
     // add new aircrafts to the content array
     addContent(state, content) {
       const data = state.content.concat(content);

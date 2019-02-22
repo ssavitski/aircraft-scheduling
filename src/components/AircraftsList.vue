@@ -9,7 +9,9 @@
         :active="aircraft.ident === activeAircraft.ident"
         class="d-flex justify-content-between align-items-center aircrafts-list__item">
         {{ aircraft.ident }}
-        <b-badge variant="primary" pill>58%</b-badge>
+        <b-badge variant="primary" pill>
+          {{ aircraft.utilization || 0 }}%
+        </b-badge>
       </b-list-group-item>
     </b-list-group>
 
